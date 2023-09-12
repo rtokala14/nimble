@@ -2,28 +2,13 @@
 
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useDrawerStore } from "@/utils/store";
 
 export default function DrawerToggle() {
-  const searchParams = useSearchParams();
-
-  const drawWidth = searchParams.get("draw") || "close";
+  const toggleDrawer = useDrawerStore((store) => store.toggleDrawer);
   return (
-    <Button asChild variant={"ghost"}>
-      <Link
-        href={`?${new URLSearchParams({
-          draw:
-            drawWidth === "open"
-              ? "close"
-              : drawWidth === "close"
-              ? "open"
-              : "open",
-        })}`}
-        prefetch
-      >
-        <HamburgerMenuIcon className="h-5 w-5" />
-      </Link>
+    <Button onClick={toggleDrawer} variant={"ghost"}>
+      <HamburgerMenuIcon className="h-5 w-5" />
     </Button>
   );
 }
