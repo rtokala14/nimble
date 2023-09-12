@@ -21,4 +21,4 @@ const testSchema = new mongoose.Schema(
 );
 
 export type Test = mongoose.InferSchemaType<typeof testSchema>;
-export const Test = mongoose.model("Test", testSchema);
+export const Test = mongoose.models.Test || mongoose.model("Test", testSchema);
