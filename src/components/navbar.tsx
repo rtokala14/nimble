@@ -2,13 +2,17 @@ import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/mode-toggle";
 import DrawerToggle from "./drawer-toggle";
 import {
-  LoginLink,
   LogoutLink,
-  RegisterLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export default function Navbar() {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -23,23 +27,34 @@ export default function Navbar() {
       </div>
       <div className=" flex items-center gap-2">
         <ModeToggle />
-        {isAuthenticated() ? (
-          <>
-            <Button asChild>
-              <LogoutLink>Sign Out</LogoutLink>
-            </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage src={user.picture!} />
               <AvatarFallback>{`${user.given_name?.charAt(
                 0
               )}${user.family_name?.charAt(0)}`}</AvatarFallback>
             </Avatar>
-          </>
-        ) : (
-          <Button asChild>
-            <LoginLink>Sign In</LoginLink>
-          </Button>
-        )}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-full">
+            <DropdownMenuItem>
+              <Button variant={"ghost"} className="w-full">
+                <Link
+                  target="_blank"
+                  href={"https://github.com/rtokala14/nimble"}
+                >
+                  Github
+                </Link>
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button asChild variant={"destructive"} className="w-full">
+                <LogoutLink>Log Out</LogoutLink>
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );
