@@ -8,6 +8,7 @@ import {
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import Link from "next/link";
 
 export default function Navbar() {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -17,7 +18,7 @@ export default function Navbar() {
       <div className="flex gap-2 items-center">
         <DrawerToggle />
         <Button className=" select-none text-lg" variant={"ghost"}>
-          Nimble
+          <Link href={"/console"}>Nimble</Link>
         </Button>
       </div>
       <div className=" flex items-center gap-2">

@@ -1,15 +1,22 @@
-import Drawer from "@/components/drawer";
-import { getAllTestItems } from "@/utils/actions";
+import { Button } from "@/components/ui/button";
+import {
+  LoginLink,
+  getKindeServerSession,
+} from "@kinde-oss/kinde-auth-nextjs/server";
+import Link from "next/link";
 
-export default async function Home() {
-  const testData = await getAllTestItems();
-
+export default function Page() {
+  const { isAuthenticated } = getKindeServerSession();
   return (
-    <main className="flex w-full h-screen pt-12 justify-stretch">
-      <Drawer />
-      <div className="h-full w-full p-2">
-        <div className="h-full w-full rounded-md bg-secondary text-secondary-foreground"></div>
-      </div>
+    <main>
+      <h1>Nimble</h1>
+      <Button>
+        {isAuthenticated() ? (
+          <Link href={"/console"}>Go to Console</Link>
+        ) : (
+          <LoginLink>Login</LoginLink>
+        )}
+      </Button>
     </main>
   );
 }
