@@ -75,7 +75,7 @@ export default function Drawer() {
 
       <Separator orientation="horizontal" />
 
-      <Link href={"/console/focus"} className="w-full">
+      <Link href={"/console/todo"} className="w-full">
         <Button
           variant={"ghost"}
           className="flex items-center justify-start w-full gap-2"
@@ -88,7 +88,7 @@ export default function Drawer() {
           <h3
             className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
           >
-            Focus
+            To-Do
           </h3>
         </Button>
       </Link>
