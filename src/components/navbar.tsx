@@ -17,6 +17,7 @@ import {
 export default function Navbar() {
   const { isAuthenticated, getUser } = getKindeServerSession();
   const user = getUser();
+
   return (
     <nav className=" w-screen fixed top-0 h-12 pr-2 flex items-center justify-between">
       <div className="flex gap-2 items-center">
