@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import connectDB from "./db/connect-db";
-import { Test } from "./db/schema";
+import { Test, ToDo, ToDoType } from "./db/schema";
 
 export async function getAllTestItems() {
   await connectDB();
@@ -33,5 +33,26 @@ export async function deleteTestItem(delId: string) {
   });
 
   revalidatePath("/");
+  return res;
+}
+
+export async function addTodoItem(newTodo: ToDoType) {
+  await connectDB();
+
+  const res = ToDo.create(newTodo);
+
+  revalidatePath("/console/todo");
+  revalidatePath("/console/reminders");
+
+  return res;
+}
+
+export async function getAllTodos(userId: string) {
+  await connectDB();
+
+  const res = ToDo.find({
+    userId: userId,
+  }).exec();
+
   return res;
 }

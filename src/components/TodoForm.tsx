@@ -27,9 +27,10 @@ import { cn } from "@/utils/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import { Calendar } from "./ui/calendar";
+import { addTodoItem } from "@/utils/actions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  userId: z.string(),
   title: z.string().min(1),
   body: z.string().optional(),
   color: z.string().optional(),
@@ -48,20 +49,23 @@ function TodoForm({ userId }: { userId: string }) {
     },
   });
 
+  const router = useRouter();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("sdfkjhlk");
     const addData = {
       ...values,
       userId: userId,
     };
 
-    console.log(values);
+    const res = void addTodoItem(addData);
+    router.push("/console/todo");
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        // onChange={() => console.log(form.getValues())}
         className="space-y-8 w-full md:w-2/3 xl:w-1/2"
       >
         <FormField
