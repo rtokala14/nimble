@@ -18,7 +18,7 @@ export default function Drawer() {
     <div
       className={` ${
         isOpen ? "w-48" : "w-0 hidden md:flex md:w-14"
-      } pt-4 flex flex-col items-start justify-between transition-width duration-75`}
+      } pt-4 flex flex-col items-start justify-between transition-width`}
     >
       <div className="flex flex-col items-start gap-4">
         <Link href={"/console"} className="w-full">
@@ -27,13 +27,9 @@ export default function Drawer() {
             className="flex items-center justify-start w-full gap-2"
           >
             <HomeIcon
-              className={`${
-                isOpen ? "h-7 w-7" : "h-6 w-6"
-              } "transition-width transition-height duration-75 ease-out"`}
+              className={`${"h-6 w-6"} "transition-width transition-height duration-75 ease-out"`}
             />
-            <h3
-              className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
-            >
+            <h3 className={`${isOpen ? "flex" : "hidden"} transition-all`}>
               Dashboard
             </h3>
           </Button>
@@ -45,13 +41,9 @@ export default function Drawer() {
             className="flex items-center justify-start w-full gap-2"
           >
             <ClockIcon
-              className={`${
-                isOpen ? "h-7 w-7" : "h-6 w-6"
-              } "transition-width transition-height duration-75"`}
+              className={`${"h-6 w-6"} "transition-width transition-height duration-75"`}
             />
-            <h3
-              className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
-            >
+            <h3 className={`${isOpen ? "flex" : "hidden"} transition-all`}>
               Reminders
             </h3>
           </Button>
@@ -63,13 +55,9 @@ export default function Drawer() {
             className="flex items-center justify-start w-full gap-2"
           >
             <Crosshair2Icon
-              className={`${
-                isOpen ? "h-7 w-7" : "h-6 w-6"
-              } "transition-width transition-height duration-75"`}
+              className={`${"h-6 w-6"} "transition-width transition-height duration-75"`}
             />
-            <h3
-              className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
-            >
+            <h3 className={`${isOpen ? "flex" : "hidden"} transition-all`}>
               Focus
             </h3>
           </Button>
@@ -83,13 +71,9 @@ export default function Drawer() {
             className="flex items-center justify-start w-full gap-2"
           >
             <Pencil2Icon
-              className={`${
-                isOpen ? "h-7 w-7" : "h-6 w-6"
-              } "transition-width transition-height duration-75"`}
+              className={`${"h-6 w-6"} "transition-width transition-height duration-75"`}
             />
-            <h3
-              className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
-            >
+            <h3 className={`${isOpen ? "flex" : "hidden"} transition-all`}>
               To-Do
             </h3>
           </Button>
@@ -102,13 +86,9 @@ export default function Drawer() {
           className="flex items-center justify-start w-full gap-2"
         >
           <GearIcon
-            className={`${
-              isOpen ? "h-7 w-7" : "h-6 w-6"
-            } "transition-width transition-height duration-75"`}
+            className={`${"h-6 w-6"} "transition-width transition-height duration-75"`}
           />
-          <h3
-            className={`${isOpen ? "flex" : "hidden"} text-lg transition-all`}
-          >
+          <h3 className={`${isOpen ? "flex" : "hidden"} transition-all`}>
             Settings
           </h3>
         </Button>
