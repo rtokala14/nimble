@@ -22,20 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { cn } from "@/utils/utils";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, format } from "date-fns";
-import { Calendar } from "./ui/calendar";
-import { addTodoItem } from "@/utils/actions";
 import { useRouter } from "next/navigation";
+import { addTodoList } from "@/utils/actions";
 
 const formSchema = z.object({
   title: z.string().min(1),
-  body: z.string().optional(),
+  description: z.string().optional(),
   color: z.string().optional(),
-  checked: z.boolean(),
-  date: z.date().optional(),
 });
 
 function TodoForm({ userId }: { userId: string }) {
@@ -43,9 +36,8 @@ function TodoForm({ userId }: { userId: string }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      body: "",
+      description: "",
       color: "none",
-      checked: false,
     },
   });
 
@@ -57,7 +49,8 @@ function TodoForm({ userId }: { userId: string }) {
       userId: userId,
     };
 
-    const res = void addTodoItem(addData);
+    // const res = void addTodoItem(addData);
+    const res = void addTodoList(addData);
     router.push("/console/todo");
   }
 
@@ -84,7 +77,7 @@ function TodoForm({ userId }: { userId: string }) {
         />
         <FormField
           control={form.control}
-          name="body"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Body</FormLabel>
@@ -116,69 +109,6 @@ function TodoForm({ userId }: { userId: string }) {
                   <SelectItem value="orange">Orange</SelectItem>
                 </SelectContent>
               </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Due Date (Optional)</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="w-auto flex flex-col space-y-2 p-2"
-                  align="start"
-                >
-                  <Select
-                    onValueChange={(value) =>
-                      field.onChange(addDays(new Date(), parseInt(value)))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select " />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="0">Today</SelectItem>
-                      <SelectItem value="1">Tomorrow</SelectItem>
-                      <SelectItem value="3">In 3 days</SelectItem>
-                      <SelectItem value="7">In a week</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <div className="rounded-md border">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => date < new Date()}
-                      initialFocus
-                    />
-                  </div>
-                </PopoverContent>
-              </Popover>
-              <FormDescription>
-                The date this item is due, automatically added to your Reminders
-                tab.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
