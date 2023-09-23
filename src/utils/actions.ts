@@ -35,9 +35,11 @@ export async function addTodoItem({
   await connectDB();
 
   const res = ToDoList.updateOne(
-    { id: listId },
-    { list: prevList.push(newData) }
+    { _id: listId },
+    { list: prevList.concat(newData) }
   );
+
+  revalidatePath("/console/todo");
 
   return res;
 }

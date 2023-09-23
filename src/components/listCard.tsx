@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { ToDoItemType } from "@/utils/db/schema";
 import AddItemDialog from "./addItemDialog";
+import { Separator } from "./ui/separator";
 
 export default function ListCard({
   todoList,
@@ -28,6 +29,7 @@ export default function ListCard({
       <CardHeader>
         <CardTitle>{cardDetails.title}</CardTitle>
         <CardDescription>{cardDetails.description}</CardDescription>
+        <Separator />
       </CardHeader>
       <CardContent>
         {todoList.map((item, index) => (

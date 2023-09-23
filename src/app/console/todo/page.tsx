@@ -17,7 +17,7 @@ async function Page() {
   const user = getUser();
 
   const list = await getAllTodoLists(user.id ? user.id : "");
-  console.log(list);
+  // console.log(list);
   return (
     <div className="w-full h-full p-2 flex flex-col gap-4">
       <Link href={"/console/todo/create"}>

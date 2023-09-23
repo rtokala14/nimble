@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -38,6 +39,8 @@ import { ToDoItemType } from "@/utils/db/schema";
 import { addTodoItem } from "@/utils/actions";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { toast } from "sonner";
 
 const DialogSchema = z.object({
   title: z.string(),
@@ -65,15 +68,23 @@ export default function AddItemDialog({
   const router = useRouter();
 
   function onSubmit(data: z.infer<typeof DialogSchema>) {
-    const res = void addTodoItem({
+    const res = addTodoItem({
       listId: cardId,
       prevList: prevList,
       newData: data,
     });
 
+    toast.promise(res, {
+      loading: "Adding Item...",
+      success: (data) => {
+        return `Item added to ${cardTitle}`;
+      },
+      error: "Error",
+    });
+
     console.log(res);
 
-    router.push("/console/todo");
+    // router.push("/console/todo");
   }
   return (
     <Dialog>
@@ -185,7 +196,16 @@ export default function AddItemDialog({
                 </FormItem>
               )}
             />
-            <Button type="submit">Add</Button>
+            <DialogFooter>
+              <DialogClose>
+                <Button type="button" variant={"destructive"}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <DialogClose>
+                <Button type="submit">Add</Button>
+              </DialogClose>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

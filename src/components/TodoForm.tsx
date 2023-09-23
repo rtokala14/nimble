@@ -24,6 +24,7 @@ import {
 } from "./ui/select";
 import { useRouter } from "next/navigation";
 import { addTodoList } from "@/utils/actions";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -50,7 +51,15 @@ function TodoForm({ userId }: { userId: string }) {
     };
 
     // const res = void addTodoItem(addData);
-    const res = void addTodoList(addData);
+    const res = addTodoList(addData);
+
+    toast.promise(res, {
+      loading: "Adding List...",
+      success: (data) => {
+        return `List added`;
+      },
+      error: "Error",
+    });
     router.push("/console/todo");
   }
 

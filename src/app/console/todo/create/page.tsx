@@ -12,7 +12,7 @@ function Page() {
 
   const user = getUser();
   return (
-    <div className="w-full h-full flex flex-col items-center p-10 bg-background border-secondary border-2  rounded-md">
+    <div className="w-full my-auto flex flex-col items-center p-10 bg-background border-secondary border-2  rounded-md">
       <h2 className="text-2xl font-semibold">Create To-Do</h2>
       <TodoForm userId={user.id ? user.id : ""} />
     </div>
