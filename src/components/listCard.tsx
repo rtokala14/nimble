@@ -11,6 +11,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { ToDoItemType } from "@/utils/db/schema";
 import AddItemDialog from "./addItemDialog";
 import { Separator } from "./ui/separator";
+import ListItem from "./listItem";
 
 export default function ListCard({
   todoList,
@@ -33,7 +34,7 @@ export default function ListCard({
       </CardHeader>
       <CardContent>
         {todoList.map((item, index) => (
-          <p key={`${cardDetails.title}-${index}`}>{item.title}</p>
+          <ListItem key={`${cardDetails.title}-${index}`} item={item} />
         ))}
       </CardContent>
       <CardFooter className="gap-4">
