@@ -33,13 +33,18 @@ export default function ListCard({
         <Separator />
       </CardHeader>
       <CardContent>
-        {todoList.map((item, index) => (
-          <ListItem
-            key={`${cardDetails.title}-${index}`}
-            item={item}
-            cardId={cardDetails.id}
-          />
-        ))}
+        {todoList.map((item, index) => {
+          return (
+            <ListItem
+              key={`${cardDetails.title}-${index}`}
+              itemName={item.title}
+              itemDescription={item.description ?? ""}
+              itemChecked={item.checked}
+              itemId={item._id.toString()}
+              cardId={cardDetails.id}
+            />
+          );
+        })}
       </CardContent>
       <CardFooter className="gap-4">
         <AddItemDialog

@@ -75,13 +75,13 @@ export async function toggleOnCheckItem({
     return { error: true, message: "Todo item not found" };
   }
 
-  // item.toggleCompleted();
+  item.toggleCompleted();
 
-  // try {
-  //   const res = item.save();
-  //   revalidatePath("/console/todo");
-  //   return { success: true };
-  // } catch (error) {
-  //   return { success: false, error };
-  // }
+  try {
+    const res = list.save();
+    revalidatePath("/console/todo");
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
 }

@@ -35,7 +35,7 @@ async function Page() {
               title: item.title,
               description: item.description,
               color: item.color,
-              id: item._id,
+              id: item._id.toString(),
             }}
           />
         ))}
