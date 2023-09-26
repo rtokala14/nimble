@@ -40,6 +40,7 @@ export default function ListCard({
               itemName={item.title}
               itemDescription={item.description ?? ""}
               itemChecked={item.checked}
+              //@ts-ignore
               itemId={item._id.toString()}
               cardId={cardDetails.id}
             />
