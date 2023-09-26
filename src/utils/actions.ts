@@ -5,7 +5,12 @@ import connectDB from "./db/connect-db";
 import { ToDoItem, ToDoItemType, ToDoList, ToDoListType } from "./db/schema";
 import { randomUUID } from "crypto";
 
-export async function addTodoList(newTodoList: ToDoListType) {
+export async function addTodoList(newTodoList: {
+  userId: string;
+  title: string;
+  description?: string | undefined;
+  color?: string | undefined;
+}) {
   await connectDB();
 
   const res = ToDoList.create(newTodoList);
