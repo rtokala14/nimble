@@ -34,13 +34,17 @@ export default function ListCard({
       </CardHeader>
       <CardContent>
         {todoList.map((item, index) => (
-          <ListItem key={`${cardDetails.title}-${index}`} item={item} />
+          <ListItem
+            key={`${cardDetails.title}-${index}`}
+            item={item}
+            cardId={cardDetails.id}
+          />
         ))}
       </CardContent>
       <CardFooter className="gap-4">
         <AddItemDialog
           cardTitle={cardDetails.title}
-          prevList={todoList}
+          // prevList={todoList}
           cardId={cardDetails.id}
         />
         <Button className="w-1/2">

@@ -10,11 +10,19 @@ const ToDoItemSchema = new mongoose.Schema({
   },
   checked: {
     type: Boolean,
+    default: false,
   },
   dueDate: {
     type: Date,
   },
+  uid: {
+    type: String,
+  },
 });
+
+ToDoItemSchema.methods.toggleCompleted = function () {
+  this.checked = !this.checked;
+};
 
 export type ToDoItemType = mongoose.InferSchemaType<typeof ToDoItemSchema>;
 
@@ -31,7 +39,7 @@ const ToDoListSchema = new mongoose.Schema({
     type: String,
   },
   list: {
-    type: Array<ToDoItemType>,
+    type: [ToDoItemSchema],
   },
   color: {
     type: String,
@@ -40,4 +48,6 @@ const ToDoListSchema = new mongoose.Schema({
 
 export type ToDoListType = mongoose.InferSchemaType<typeof ToDoListSchema>;
 export const ToDoList =
-  mongoose.models.ToDo || mongoose.model("ToDo", ToDoListSchema);
+  mongoose.models.ToDoList || mongoose.model("ToDoList", ToDoListSchema);
+export const ToDoItem =
+  mongoose.models.ToDoItem || mongoose.model("ToDoItem", ToDoItemSchema);

@@ -46,22 +46,24 @@ const DialogSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   dueDate: z.date().optional(),
+  checked: z.boolean(),
 });
 
 export default function AddItemDialog({
   cardTitle,
   cardId,
-  prevList,
-}: {
+}: // prevList,
+{
   cardTitle: string;
   cardId: string;
-  prevList: ToDoItemType[];
+  // prevList: ToDoItemType[];
 }) {
   const form = useForm<z.infer<typeof DialogSchema>>({
     resolver: zodResolver(DialogSchema),
     defaultValues: {
       title: "",
       description: "",
+      checked: false,
     },
   });
 
@@ -70,17 +72,19 @@ export default function AddItemDialog({
   function onSubmit(data: z.infer<typeof DialogSchema>) {
     const res = addTodoItem({
       listId: cardId,
-      prevList: prevList,
+      // prevList: prevList,
       newData: data,
     });
 
     toast.promise(res, {
       loading: "Adding Item...",
-      success: (data) => {
+      success: () => {
         return `Item added to ${cardTitle}`;
       },
       error: "Error",
     });
+
+    form.reset();
 
     console.log(res);
 

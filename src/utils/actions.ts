@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import connectDB from "./db/connect-db";
-import { ToDoItemType, ToDoList, ToDoListType } from "./db/schema";
+import { ToDoItem, ToDoItemType, ToDoList, ToDoListType } from "./db/schema";
+import { randomUUID } from "crypto";
 
 export async function addTodoList(newTodoList: ToDoListType) {
   await connectDB();
@@ -25,21 +26,62 @@ export async function getAllTodoLists(userId: string) {
 
 export async function addTodoItem({
   listId,
-  prevList,
   newData,
 }: {
   listId: string;
-  prevList: ToDoItemType[];
   newData: ToDoItemType;
 }) {
   await connectDB();
 
-  const res = ToDoList.updateOne(
-    { _id: listId },
-    { list: prevList.concat(newData) }
-  );
+  const list = await ToDoList.findById(listId);
 
-  revalidatePath("/console/todo");
+  if (!list) {
+    return { error: true };
+  }
 
-  return res;
+  const newItem = new ToDoItem(newData);
+
+  list.list.push(newItem);
+
+  try {
+    const res = await list.save();
+    revalidatePath("/console/todo");
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
+
+  // return res;
+}
+
+export async function toggleOnCheckItem({
+  itemId,
+  cardId,
+}: {
+  itemId: string;
+  cardId: string;
+}) {
+  await connectDB();
+
+  const list = await ToDoList.findById(cardId);
+
+  if (!list) {
+    return { error: true };
+  }
+
+  const item = list.list.id(itemId);
+
+  if (!item) {
+    return { error: true, message: "Todo item not found" };
+  }
+
+  // item.toggleCompleted();
+
+  // try {
+  //   const res = item.save();
+  //   revalidatePath("/console/todo");
+  //   return { success: true };
+  // } catch (error) {
+  //   return { success: false, error };
+  // }
 }
