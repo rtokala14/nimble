@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import ListCard from "@/components/listCard";
 import { getAllTodoLists } from "@/utils/actions";
+import TodoForm from "@/components/TodoForm";
 
 export const metadata: Metadata = {
   title: "To-Do | Nimble",
@@ -20,12 +21,7 @@ async function Page() {
   // console.log(list);
   return (
     <div className="w-full h-full p-2 flex flex-col gap-4">
-      <Link href={"/console/todo/create"}>
-        <Button>
-          <PlusIcon />
-          <p>Create</p>
-        </Button>
-      </Link>
+      <TodoForm userId={user.id ?? ""} />
       <div className=" grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {list.map((item, index) => (
           <ListCard
