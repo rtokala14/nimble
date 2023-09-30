@@ -21,14 +21,11 @@ async function Page() {
   // console.log(list);
   return (
     <div className="w-full h-full p-2 flex flex-col gap-4">
-        <div className=" w-full flex items-center justify-between">
-
+      <div className=" w-full flex items-center justify-between">
         <TodoForm userId={user.id ?? ""} />
-        <p className=" text-sm font-light px-2">
-            {`${list.length} lists`}
-        </p>
-        </div>
-      <div className=" grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <p className=" text-sm font-light px-2">{`${list.length} lists`}</p>
+      </div>
+      <div className=" grid items-start grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {list.map((item, index) => (
           <ListCard
             key={`List ${index}`}

@@ -7,11 +7,12 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ToDoItemType } from "@/utils/db/schema";
 import AddItemDialog from "./addItemDialog";
 import { Separator } from "./ui/separator";
 import ListItem from "./listItem";
+import { deleteCard } from "@/utils/actions";
 
 export default function ListCard({
   todoList,
@@ -26,9 +27,22 @@ export default function ListCard({
   };
 }) {
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
-        <CardTitle>{cardDetails.title}</CardTitle>
+        <CardTitle className=" w-full flex items-center justify-between">
+          <p>{cardDetails.title}</p>
+          <form action={deleteCard}>
+            <input
+              type="text"
+              className=" sr-only"
+              name="cardId"
+              defaultValue={cardDetails.id}
+            />
+            <Button variant={"ghost"} size="icon">
+              <TrashIcon className=" text-red-400 h-5 w-5" />
+            </Button>
+          </form>
+        </CardTitle>
         <CardDescription>{cardDetails.description}</CardDescription>
         <Separator />
       </CardHeader>
@@ -48,14 +62,14 @@ export default function ListCard({
         })}
       </CardContent>
       <CardFooter className="gap-4">
+        <Button className="w-1/2" variant={"secondary"}>
+          <Pencil1Icon className="mr-2 h-4 w-4" /> Edit
+        </Button>
         <AddItemDialog
           cardTitle={cardDetails.title}
           // prevList={todoList}
           cardId={cardDetails.id}
         />
-        <Button className="w-1/2">
-          <Pencil1Icon className="mr-2 h-4 w-4" /> Edit
-        </Button>
       </CardFooter>
     </Card>
   );

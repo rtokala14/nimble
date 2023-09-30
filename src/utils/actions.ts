@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import connectDB from "./db/connect-db";
 import { ToDoItem, ToDoItemType, ToDoList, ToDoListType } from "./db/schema";
-import { randomUUID } from "crypto";
 
 export async function addTodoList(newTodoList: {
   userId: string;
@@ -89,4 +88,11 @@ export async function toggleOnCheckItem({
   } catch (error) {
     return { success: false, error };
   }
+}
+
+export async function deleteCard(formData: FormData) {
+  const res = await ToDoList.findByIdAndDelete(formData.get("cardId"));
+  revalidatePath("/console/todo");
+
+  return { success: true };
 }
