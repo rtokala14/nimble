@@ -78,7 +78,7 @@ function TodoForm({ userId }: { userId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-1/2">
+        <Button className=" w-41">
           <PlusIcon className="mr-2 h-4 w-4" /> Create New
         </Button>
       </DialogTrigger>
