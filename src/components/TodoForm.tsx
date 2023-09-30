@@ -100,6 +100,7 @@ function TodoForm({
       });
     }
 
+    router.refresh();
     form.reset();
   }
 
@@ -193,7 +194,7 @@ function TodoForm({
                 </Button>
               </DialogClose>
               <DialogClose>
-                <Button type="submit">Add</Button>
+                <Button type="submit">{cardDetails ? "Edit" : "Add"}</Button>
               </DialogClose>
             </DialogFooter>
           </form>

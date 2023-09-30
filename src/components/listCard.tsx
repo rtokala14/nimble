@@ -28,7 +28,15 @@ export default function ListCard({
   };
 }) {
   return (
-    <Card className="">
+    <Card
+      className={`${
+        cardDetails.color === "purple" ? "dark:bg-purple-800 bg-purple-200" : ""
+      } ${cardDetails.color === "red" ? "dark:bg-red-800 bg-red-200" : ""} ${
+        cardDetails.color === "green" ? "dark:bg-green-800 bg-green-200" : ""
+      } ${cardDetails.color === "blue" ? "dark:bg-blue-800 bg-blue-200" : ""} ${
+        cardDetails.color === "orange" ? "dark:bg-orange-800 bg-orange-200" : ""
+      }`}
+    >
       <CardHeader>
         <CardTitle className=" w-full flex items-center justify-between">
           <p>{cardDetails.title}</p>
@@ -40,7 +48,7 @@ export default function ListCard({
               defaultValue={cardDetails.id}
             />
             <Button variant={"ghost"} size="icon">
-              <TrashIcon className=" text-red-400 h-5 w-5" />
+              <TrashIcon className=" h-5 w-5" />
             </Button>
           </form>
         </CardTitle>
