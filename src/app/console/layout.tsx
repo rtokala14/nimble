@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="flex w-full h-screen pt-12 justify-stretch">
         <Drawer />
         <div className="h-full w-full p-2">
-          <ScrollArea className="h-full w-full rounded-md bg-secondary text-secondary-foreground">
+          <ScrollArea className="h-full w-full border border-gray-700 rounded-md bg-secondary text-secondary-foreground">
             {children}
           </ScrollArea>
         </div>
