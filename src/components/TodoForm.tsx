@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { useRouter } from "next/navigation";
-import { addTodoList } from "@/utils/actions";
+import { addTodoList, editCard } from "@/utils/actions";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -34,7 +34,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
@@ -43,34 +43,62 @@ const formSchema = z.object({
   color: z.string().optional(),
 });
 
-function TodoForm({ userId }: { userId: string }) {
+function TodoForm({
+  userId,
+  cardDetails,
+}: {
+  userId: string;
+  cardDetails?: {
+    id: string;
+    title: string;
+    description: string;
+    color: string;
+  };
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      color: "none",
+      title: cardDetails ? cardDetails.title : "",
+      description: cardDetails ? cardDetails.description : "",
+      color: cardDetails ? cardDetails.color : "none",
     },
   });
 
   const router = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const addData = {
-      ...values,
-      userId: userId,
-    };
+    if (cardDetails) {
+      const editData = {
+        ...values,
+        cardId: cardDetails.id,
+      };
 
-    // const res = void addTodoItem(addData);
-    const res = addTodoList(addData);
+      const res = editCard({ editDetails: editData });
 
-    toast.promise(res, {
-      loading: "Adding List...",
-      success: () => {
-        return `List added`;
-      },
-      error: "Error",
-    });
+      toast.promise(res, {
+        loading: "Editing List...",
+        success: () => {
+          return `List edited`;
+        },
+        error: "Error editing list",
+      });
+    } else {
+      const addData = {
+        ...values,
+        userId: userId,
+      };
+
+      // const res = void addTodoItem(addData);
+      const res = addTodoList(addData);
+
+      toast.promise(res, {
+        loading: "Adding List...",
+        success: () => {
+          return `List added`;
+        },
+        error: "Error",
+      });
+    }
 
     form.reset();
   }
@@ -78,9 +106,15 @@ function TodoForm({ userId }: { userId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" w-41">
-          <PlusIcon className="mr-2 h-4 w-4" /> Create New
-        </Button>
+        {cardDetails ? (
+          <Button className="w-1/2" variant={"secondary"}>
+            <Pencil1Icon className="mr-2 h-4 w-4" /> Edit
+          </Button>
+        ) : (
+          <Button className=" w-41">
+            <PlusIcon className="mr-2 h-4 w-4" /> Create New
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

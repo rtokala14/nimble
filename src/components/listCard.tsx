@@ -13,6 +13,7 @@ import AddItemDialog from "./addItemDialog";
 import { Separator } from "./ui/separator";
 import ListItem from "./listItem";
 import { deleteCard } from "@/utils/actions";
+import TodoForm from "./TodoForm";
 
 export default function ListCard({
   todoList,
@@ -62,9 +63,7 @@ export default function ListCard({
         })}
       </CardContent>
       <CardFooter className="gap-4">
-        <Button className="w-1/2" variant={"secondary"}>
-          <Pencil1Icon className="mr-2 h-4 w-4" /> Edit
-        </Button>
+        <TodoForm userId="" cardDetails={cardDetails} />
         <AddItemDialog
           cardTitle={cardDetails.title}
           // prevList={todoList}

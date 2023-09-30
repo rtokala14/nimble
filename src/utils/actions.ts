@@ -91,8 +91,35 @@ export async function toggleOnCheckItem({
 }
 
 export async function deleteCard(formData: FormData) {
+  await connectDB();
   const res = await ToDoList.findByIdAndDelete(formData.get("cardId"));
   revalidatePath("/console/todo");
 
   return { success: true };
+}
+
+export async function editCard({
+  editDetails,
+}: {
+  editDetails: {
+    cardId: string;
+    title: string;
+    description?: string | undefined;
+    color?: string | undefined;
+  };
+}) {
+  await connectDB();
+
+  try {
+    const res = await ToDoList.findByIdAndUpdate(editDetails.cardId, {
+      title: editDetails.title,
+      description: editDetails.description,
+      color: editDetails.color,
+    });
+
+    revalidatePath("/console/todo");
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
 }
