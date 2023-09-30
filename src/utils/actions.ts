@@ -12,7 +12,7 @@ export async function addTodoList(newTodoList: {
 }) {
   await connectDB();
 
-  const res = ToDoList.create(newTodoList);
+  const res = await ToDoList.create(newTodoList);
 
   revalidatePath("/console/todo");
   revalidatePath("/console/reminders");
@@ -23,7 +23,7 @@ export async function addTodoList(newTodoList: {
 export async function getAllTodoLists(userId: string) {
   await connectDB();
 
-  const res = ToDoList.find({ userId: userId });
+  const res = await ToDoList.find({ userId: userId });
 
   return res;
 }

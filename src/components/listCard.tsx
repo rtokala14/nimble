@@ -53,7 +53,7 @@ export default function ListCard({
           </form>
         </CardTitle>
         <CardDescription>{cardDetails.description}</CardDescription>
-        <Separator />
+        <Separator className=" bg-muted-foreground" />
       </CardHeader>
       <CardContent>
         {todoList.map((item, index) => {
